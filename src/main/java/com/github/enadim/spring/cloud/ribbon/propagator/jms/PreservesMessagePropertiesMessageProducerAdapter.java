@@ -20,6 +20,7 @@ import com.github.enadim.spring.cloud.ribbon.propagator.AbstractExecutionContext
 import com.github.enadim.spring.cloud.ribbon.propagator.Filter;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.jms.CompletionListener;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -52,6 +53,22 @@ public class PreservesMessagePropertiesMessageProducerAdapter extends AbstractEx
                                                             @NotNull Map<String, String> extraStaticEntries) {
         super(keysToPropagate, Message::setStringProperty, extraStaticEntries);
         this.delegate = delegate;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setDeliveryDelay(long deliveryDelay) throws JMSException {
+        delegate.setDeliveryDelay(deliveryDelay);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getDeliveryDelay() throws JMSException {
+        return delegate.getDeliveryDelay();
     }
 
     /**
@@ -187,5 +204,41 @@ public class PreservesMessagePropertiesMessageProducerAdapter extends AbstractEx
     public void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException {
         trace(copy(message));
         delegate.send(destination, message, deliveryMode, priority, timeToLive);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void send(Message message, CompletionListener completionListener) throws JMSException {
+        trace(copy(message));
+        delegate.send(message, completionListener);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void send(Destination destination, Message message, CompletionListener completionListener) throws JMSException {
+        trace(copy(message));
+        delegate.send(destination, message, completionListener);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void send(Message message, int deliveryMode, int priority, long timeToLive, CompletionListener completionListener) throws JMSException {
+        trace(copy(message));
+        delegate.send(message, deliveryMode, priority, timeToLive, completionListener);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive, CompletionListener completionListener) throws JMSException {
+        trace(copy(message));
+        delegate.send(destination, message, deliveryMode, priority, timeToLive, completionListener);
     }
 }

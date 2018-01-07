@@ -4,7 +4,7 @@ plugins {
     id "org.sonarqube" version "2.6"
     id 'org.unbroken-dome.test-sets' version '1.4.2'
     id 'com.github.psxpaul.execfork' version '0.1.6'
-    id 'io.spring.dependency-management' version '1.0.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.4.RELEASE'
 }
 
 archivesBaseName = 'spring-cloud-ribbon-extensions'
@@ -15,6 +15,7 @@ targetCompatibility = 1.8
 ext {
     jcenterUrl = project.hasProperty('customJcenterUrl') ? project.customJcenterUrl : 'https://jcenter.bintray.com/'
     mavenUrl = project.hasProperty('customMavenUrl') ? project.customMavenUrl : 'https://repo.maven.apache.org/maven2/'
+    customSpringMilestoneUrl = project.hasProperty('customSpringMilestoneUrl') ? project.customSpringMilestoneUrl : 'https://repo.spring.io/libs-milestone/'
     mavenPluginsUrl = project.hasProperty('customMavenPluginsUrl') ? project.customMavenPluginsUrl : 'https://plugins.gradle.org/m2/'
 
     jvm = org.gradle.internal.jvm.Jvm.current()
@@ -54,13 +55,16 @@ apply from: 'gradle/signing.gradle'
 apply from: 'gradle/release.gradle'
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.3'
+    gradleVersion = '4.5.1'
 }
 
 repositories {
     mavenLocal()
     maven {
         url mavenUrl
+    }
+    maven {
+        url customSpringMilestoneUrl
     }
     jcenter {
         url jcenterUrl
@@ -69,8 +73,8 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Dalston.SR3'
-        mavenBom 'org.springframework.boot:spring-boot:1.5.6.RELEASE'
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.M6'
+        mavenBom 'org.springframework.boot:spring-boot:2.0.0.RC2'
     }
 }
 
@@ -81,12 +85,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-activemq") { ext.optional = true }
     compile("org.apache.activemq:activemq-broker") { ext.optional = true }
     compile("com.fasterxml.jackson.core:jackson-databind") { ext.optional = true }
-    compile('org.springframework.cloud:spring-cloud-starter-ribbon') { ext.optional = true }
-    compile('org.springframework.cloud:spring-cloud-starter-feign') { ext.optional = true }
-    compile('org.springframework.cloud:spring-cloud-starter-eureka') { ext.optional = true }
-    compile('org.springframework.cloud:spring-cloud-starter-eureka') { ext.optional = true }
-    compile('org.springframework.cloud:spring-cloud-starter-zuul') { ext.optional = true }
-    compile('org.springframework.cloud:spring-cloud-starter-eureka-server') {
+    //compile('org.springframework.cloud:spring-cloud-starter-config') { ext.optional = true }
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-ribbon') { ext.optional = true }
+    compile('org.springframework.cloud:spring-cloud-starter-openfeign') { ext.optional = true }
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client') { ext.optional = true }
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-zuul') { ext.optional = true }
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server') {
         exclude group: 'javax.servlet', module: 'servlet-api'
         ext.optional = true
     }

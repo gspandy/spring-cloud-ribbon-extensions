@@ -7,7 +7,7 @@ license {
     header rootProject.file('HEADER')
     strictCheck true
     include '**/*.java'
-    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.year = 2017
 }
 
 licenseFormatTest.group 'license'

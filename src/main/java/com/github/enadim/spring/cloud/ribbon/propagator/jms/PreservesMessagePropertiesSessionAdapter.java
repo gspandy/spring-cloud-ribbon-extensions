@@ -324,4 +324,34 @@ public class PreservesMessagePropertiesSessionAdapter extends AbstractExecutionC
     public void unsubscribe(String name) throws JMSException {
         delegate.unsubscribe(name);
     }
+
+    @Override
+    public MessageConsumer createSharedConsumer(Topic topic, String sharedSubscriptionName) throws JMSException {
+        return new PreservesMessagePropertiesMessageConsumerAdapter(delegate.createSharedConsumer(topic, sharedSubscriptionName), getFilter());
+    }
+
+    @Override
+    public MessageConsumer createSharedConsumer(Topic topic, String sharedSubscriptionName, String messageSelector) throws JMSException {
+        return new PreservesMessagePropertiesMessageConsumerAdapter(delegate.createSharedConsumer(topic, sharedSubscriptionName, messageSelector), getFilter());
+    }
+
+    @Override
+    public MessageConsumer createDurableConsumer(Topic topic, String name) throws JMSException {
+        return new PreservesMessagePropertiesMessageConsumerAdapter(delegate.createDurableConsumer(topic, name), getFilter());
+    }
+
+    @Override
+    public MessageConsumer createDurableConsumer(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException {
+        return new PreservesMessagePropertiesMessageConsumerAdapter(delegate.createDurableConsumer(topic, name, messageSelector, noLocal), getFilter());
+    }
+
+    @Override
+    public MessageConsumer createSharedDurableConsumer(Topic topic, String name) throws JMSException {
+        return new PreservesMessagePropertiesMessageConsumerAdapter(delegate.createSharedDurableConsumer(topic, name), getFilter());
+    }
+
+    @Override
+    public MessageConsumer createSharedDurableConsumer(Topic topic, String name, String messageSelector) throws JMSException {
+        return new PreservesMessagePropertiesMessageConsumerAdapter(delegate.createSharedDurableConsumer(topic, name, messageSelector), getFilter());
+    }
 }

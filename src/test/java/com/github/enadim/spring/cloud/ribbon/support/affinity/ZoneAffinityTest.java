@@ -46,7 +46,7 @@ import static org.springframework.http.HttpStatus.OK;
         properties = {
                 "spring.application.name=zone-affinity-test",
                 "endpoints.enabled=false",
-                "eureka.client.register-with-eureka=false",
+                "eureka.client.enabled=false",
                 "eureka.instance.metadataMap.zone=zone1",
                 "ribbon.eager-load.enabled=true",
                 "ribbon.eager-load.clients[0]=application2"}

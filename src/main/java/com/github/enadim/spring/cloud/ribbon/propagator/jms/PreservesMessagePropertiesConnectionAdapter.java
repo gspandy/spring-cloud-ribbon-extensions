@@ -69,6 +69,22 @@ public class PreservesMessagePropertiesConnectionAdapter implements Connection {
      * {@inheritDoc}
      */
     @Override
+    public Session createSession() throws JMSException {
+        return new PreservesMessagePropertiesSessionAdapter(delegate.createSession(), filter, extraStaticEntries);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Session createSession(int sessionMode) throws JMSException {
+        return new PreservesMessagePropertiesSessionAdapter(delegate.createSession(sessionMode), filter, extraStaticEntries);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Session createSession(boolean transacted, int acknowledgeMode) throws JMSException {
         return new PreservesMessagePropertiesSessionAdapter(delegate.createSession(transacted, acknowledgeMode), filter, extraStaticEntries);
     }
@@ -151,5 +167,21 @@ public class PreservesMessagePropertiesConnectionAdapter implements Connection {
     @Override
     public ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException {
         return delegate.createDurableConnectionConsumer(topic, subscriptionName, messageSelector, sessionPool, maxMessages);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ConnectionConsumer createSharedConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException {
+        return delegate.createSharedConnectionConsumer(topic, subscriptionName, messageSelector, sessionPool, maxMessages);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ConnectionConsumer createSharedDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException {
+        return delegate.createSharedDurableConnectionConsumer(topic, subscriptionName, messageSelector, sessionPool, maxMessages);
     }
 }

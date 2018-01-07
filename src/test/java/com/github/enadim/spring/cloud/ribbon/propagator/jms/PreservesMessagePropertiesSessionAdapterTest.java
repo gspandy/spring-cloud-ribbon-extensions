@@ -259,4 +259,39 @@ public class PreservesMessagePropertiesSessionAdapterTest {
         verify(delegate).unsubscribe(null);
     }
 
+    @Test
+    public void createSharedConsumer2() throws Exception {
+        propagator.createSharedConsumer(null, null);
+        verify(delegate).createSharedConsumer(null, null);
+    }
+
+    @Test
+    public void createSharedConsumer3() throws Exception {
+        propagator.createSharedConsumer(null, null, null);
+        verify(delegate).createSharedConsumer(null, null, null);
+    }
+
+    @Test
+    public void createDurableConsumer2() throws Exception {
+        propagator.createDurableConsumer(null, null);
+        verify(delegate).createDurableConsumer(null, null);
+    }
+
+    @Test
+    public void createDurableConsumer4() throws Exception {
+        propagator.createDurableConsumer(null, null, null, true);
+        verify(delegate).createDurableConsumer(null, null, null, true);
+    }
+
+    @Test
+    public void createSharedDurableConsumer2() throws Exception {
+        propagator.createSharedDurableConsumer(null, null);
+        verify(delegate).createSharedDurableConsumer(null, null);
+    }
+
+    @Test
+    public void createSharedDurableConsumer3() throws Exception {
+        propagator.createSharedDurableConsumer(null, null, null);
+        verify(delegate).createSharedDurableConsumer(null, null, null);
+    }
 }

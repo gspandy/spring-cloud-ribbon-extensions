@@ -20,6 +20,7 @@ import com.github.enadim.spring.cloud.ribbon.propagator.Filter;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
@@ -57,6 +58,38 @@ public class PreservesMessagePropertiesConnectionFactoryAdapter implements Conne
         this.delegate = delegate;
         this.filter = filter;
         this.extraStaticEntries = extraStaticEntries;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JMSContext createContext() {
+        return delegate.createContext();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JMSContext createContext(int sessionMode) {
+        return delegate.createContext(sessionMode);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JMSContext createContext(String userName, String password) {
+        return delegate.createContext(userName, password);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JMSContext createContext(String userName, String password, int sessionMode) {
+        return delegate.createContext(userName, password, sessionMode);
     }
 
     /**
